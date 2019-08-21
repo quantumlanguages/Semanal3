@@ -1,0 +1,85 @@
+\documentclass{article}
+
+% formato
+\usepackage[margin = 1.5cm, letterpaper]{geometry}
+\usepackage[utf8]{inputenc}
+
+% autómatas
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+
+%formato ecuaciones
+\usepackage{amsmath}
+
+% símbolos
+\usepackage{amssymb}
+
+% manejo de tablas
+\usepackage{float}
+
+\begin{document}
+    \title{
+        Lenguajes de Programación \\
+        Ejercicio Semanal 3
+    }
+
+    \author{
+        Sandra del Mar Soto Corderi \\
+        Edgar Quiroz Castañeda
+    }
+
+    \date{
+        22 de agosto del 2019
+    }
+    
+    \maketitle
+
+    \begin{enumerate}
+        \item {
+            Responde cada inciso a partir de la siguiente expresión $e$
+            
+            let x = let y = 3 in 2 + y end in\\
+            let w = let y = 2 in y * 5 end in\\
+            let y = w / x in y + x end + 2\\
+            end\\
+            end
+            
+            \begin{enumerate}
+            	\item { Llenar la siguiente tabla con base en $e$. El orden de las expresiones let es, por supuesto, el orden de lectura
+            		como texto.
+            		
+            		\begin{table}[H]
+            			\centering
+            			\begin{tabular}{|l|l|l|l|}
+            				\hline
+            				let & variable ligada & expresión a ligar & alcance del let \\ \hline
+            				1   & x               &                   &                 \\ \hline
+            				2   & y               &                   &                 \\ \hline
+            				3   & w               &                   &                 \\ \hline
+            				4   & y               &                   &                 \\ \hline
+            				5   & y               &                   &                 \\ \hline
+            			\end{tabular}
+            		\end{table}
+            	}
+            \item {
+            Encuentra la representación en la sintaxis abstracta de orden superior de $e$. Está permitido usar sintaxis concreta para operaciones y números.\\
+        	
+        	}
+        	\item{
+        	Encuentra una expresión $e'$ que sea $\alpha$-equivalente a $e$ y en donde todas las variables ligadas tengan distinto nombre.\\
+        	
+        	}
+        	\item {
+        	¿Cuál es el valor de $e$? Explica como se llego al resultado.\\
+        	
+        	}
+            \end{enumerate}
+        }
+    	\item {
+    	Realiza la siguiente sustitución mostrando la respuesta paso a paso:\\
+    	
+    	(let  $x = y \ast 4 \ in$ (let $z = x + 3$  in  $y \ast 2$ end) $\ast y $ end) $[y := x + 2]$
+    	
+    	}
+    \end{enumerate}
+\end{document}
