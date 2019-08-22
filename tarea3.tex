@@ -70,7 +70,49 @@
         	
         	}
         	\item {
-        	¿Cuál es el valor de $e$? Explica como se llego al resultado.\\
+            ¿Cuál es el valor de $e$? Explica como se llego al resultado.
+            
+            \begin{align*}
+                &\texttt{let} \ x = \texttt{let} \ y = 3 \ \texttt{in} \ 2 + y \ \texttt{end} \  \ \texttt{in} \\\
+                &\texttt{let} \ w = \texttt{let} \ y = 2 \ \texttt{in} \ y * 5 \ \texttt{end} \  \ \texttt{in} \\\
+                &\texttt{let} \ y = w / x \ \texttt{in} \ y + x \ \texttt{end} \  + 2\\
+                &\ \texttt{end} \ \\
+                &\ \texttt{end} \ \\
+                &\rightarrow (eletf) \\
+                &\texttt{let} \ x = (2 + y)[y:=3] \ \ \texttt{in} \\
+                &\texttt{let} \ w =  (y * 5)[y:=2] \ \texttt{in} \\
+                &\texttt{let} \ y = w / x \ \texttt{in} \ y + x \ \texttt{end} \  + 2\\
+                &\ \texttt{end} \ \\
+                &\ \texttt{end} \ \\
+                &= \\
+                &\texttt{let} \ x = (2 + 3) \ \ \texttt{in} \\
+                &\texttt{let} \ w =  (2 * 5) \ \texttt{in} \\
+                &\texttt{let} \ y = w / x \ \texttt{in} \ y + x \ \texttt{end} \  + 2\\
+                &\ \texttt{end} \ \\
+                &\ \texttt{end} \ \\
+                &\rightarrow (esumf), (eprodf), (eleti) \\
+                &\texttt{let} \ x = 5 \ \ \texttt{in} \\
+                &\texttt{let} \ w =  10 \ \texttt{in} \\
+                &\texttt{let} \ y = w / x \ \texttt{in} \ y + x \ \texttt{end} \  + 2\\
+                &\ \texttt{end} \ \\
+                &\ \texttt{end} \ \\
+                &\rightarrow (eletf) \\
+                &(\texttt{let} \ y = w / x \ \texttt{in} \ y + x \ \texttt{end} \  + 2)
+                [x := 5, w := 10]\\
+                &= \\
+                &\texttt{let} \ y = (w / x)[x := 5, w := 10] \ \texttt{in} \ 
+                (y + x) [x := 5, w := 10] \ \texttt{end} \  + 2 \\
+                &\rightarrow (eleti) \\
+                &\texttt{let} \ y = 10 / 5 \ \texttt{in} \ y + 5\ \texttt{end} \  + 2 \\
+                &\rightarrow (eprodf), (eleti) \\
+                &\texttt{let} \ y = 2 \ \texttt{in} \ y + 5\ \texttt{end} \  + 2 \\
+                &\rightarrow (eletf) \\
+                &(y+5)[y:=2] + 2 \\
+                &= \\
+                & 2 + 5 + 2 \\
+                &\rightarrow (esumf) \\
+                & 9
+            \end{align*}
         	
         	}
             \end{enumerate}
@@ -79,38 +121,77 @@
     	Realiza la siguiente sustitución mostrando la respuesta paso a paso:
     	
         (let  $x = y \ast 4 \ in$ (let $z = x + 3$  in  $y \ast 2$ end) $\ast y $ end) $[y := x + 2]$
-        
-        \begin{align*}
-            &(\texttt{let} \ x = y \ast 4 \ \texttt{in} \ 
+
+        Primero, tenemos que $x \in FV(x + 2)$, por lo que no se puede realizar
+        una sustitución textual en el \texttt{let} exterior.
+
+        \[
+            (\texttt{let} \ x = y \ast 4 \ \texttt{in} \ 
             (\texttt{let} \ z = x + 3 \ \texttt{in} \ 
             y \ast 2 \ \texttt{end}) \ \ast y \ \texttt{end}) 
-            [y := x + 2] \\
+            [y := x + 2]
+        \]
+
+        Entonces, hay que encontrar una expresión $\alpha$-equivalente que no
+        tenga este problema.
+
+        \[
             \equiv_{\alpha}
-            & (\texttt{let} \ w = y \ast 4 \ \texttt{in} \ 
+            (\texttt{let} \ w = y \ast 4 \ \texttt{in} \ 
             (\texttt{let} \ z = w + 3 \ \texttt{in} \ 
             y \ast 2 \ \texttt{end}) \ \ast y \ \texttt{end}) 
-            [y := x + 2] \\
+            [y := x + 2]
+        \]
+
+        Luego, ya es posible realizar la sustitución de forma textual.
+
+        Primero, se aplica recursivamente la sustitución a la asignación y al
+        cuerpo del \texttt{let} exterior.
+
+        \[
             =
-            & \texttt{let} \ w = (y \ast 4)[y := x + 2] \ \texttt{in} \ 
+            \texttt{let} \ w = (y \ast 4)[y := x + 2] \ \texttt{in} \ 
             ((\texttt{let} \ z = w + 3 \ \texttt{in} \ 
             y \ast 2 \ \texttt{end}) \ \ast y) [y := x + 2] \ \texttt{end}
-            \\
+        \]
+
+        En la expresión de asignación ya se puede aplicar directamente la
+        sustitución. En el cuerpo del \texttt{let} aún hay que realizarla
+        recursivamente. 
+
+        Notemos que en el \texttt{let} interior, se puede realizar la
+        sustitución textual sin necesidad de realizar ninguna
+        $\alpha$-equivalencia.
+
+        \[
             =
-            & \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
+            \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
             (\texttt{let} \ z = w + 3 \ \texttt{in} \ 
             y \ast 2 \ \texttt{end})[y := x + 2] \ \ast y [y := x + 2] \ 
-            \texttt{end} \\
+            \texttt{end} 
+        \]
+
+        Se aplica la sustitución donde es posible, y se sigue recursivamente
+        donde no se puede.
+
+        \[
             =
-            & \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
+            \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
             (\texttt{let} \ z = (w + 3) [y := x + 2] \ \texttt{in} \ 
             (y \ast 2 ) [y := x + 2]\ \texttt{end}) \ \ast (x + 2) \ 
-            \texttt{end} \\
+            \texttt{end} 
+        \]
+
+        Finalmente, se termina de aplicar la sustitución en todas las
+        subexpresiones.
+
+        \[
             =
-            & \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
+            \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
             (\texttt{let} \ z = (w + 3) \ \texttt{in} \ 
             ((x + 2) \ast 2 ) \ \texttt{end}) \ \ast (x + 2) \ 
-            \texttt{end} \\
-        \end{align*}
+            \texttt{end}
+        \]
     	
     	}
     \end{enumerate}
