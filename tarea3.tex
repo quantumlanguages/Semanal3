@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}% http://ctan.org/pkg/graphicx
 \usepackage{array}
+\usepackage[table,xcdraw]{xcolor}
 
 % autómatas
 \usepackage{tikz}
@@ -50,41 +51,29 @@
             \begin{enumerate}
             	\item { Llenar la siguiente tabla con base en $e$. El orden de las expresiones let es, por supuesto, el orden de lectura
             		como texto.
+            	
+            	\begin{table}[H]
+            		\centering
+            		\begin{tabular}{|
+            				>{\columncolor[HTML]{FFFC9E}}c |c|c|c|}
+            			\hline
+            			\cellcolor[HTML]{96FFFB}{\color[HTML]{000000} Let} & \cellcolor[HTML]{96FFFB}{\color[HTML]{000000} Variable Ligada} & \cellcolor[HTML]{96FFFB}{\color[HTML]{000000} Expresión a Ligar} & \cellcolor[HTML]{96FFFB}{\color[HTML]{000000} Alcance del let} \\ \hline
+            			1                                                  & x                                                              & \begin{minipage}{.3\textwidth}
+            				\includegraphics[width=\linewidth, height=.21\linewidth]{x1.png}
+            			\end{minipage}                                           &  \begin{minipage}{.3\textwidth}
+            				\includegraphics[width=\linewidth, height=.21\linewidth]{x1.png}
+            				\end{minipage}                                                             \\ \hline
+            			2                                                  & y                                                              & $\texttt{2 + y}$                                                 & $\texttt{2 + y}$                                               \\ \hline
+            			3                                                  & w                                                              & $\texttt{let y = w / x in y + x end + 2}$                        & $\texttt{let y = w / x in y + x end + 2}$                      \\ \hline
+            			4                                                  & y                                                              & $\texttt{y * 5}$                                                 & $\texttt{y * 5}$                                               \\ \hline
+            			5                                                  & y                                                              & $\texttt{y + x}$                                                 & $\texttt{y + x}$                                               \\ \hline
+            		\end{tabular}
+            	\end{table}	
             		
-            		\begin{table}[H]
-            			\centering
-            			\begin{tabular}{|l|l|l|l|}
-            				\hline
-            				let & variable ligada & expresión a ligar & alcance del let \\ \hline
-            				1   & x               & 
-            				\begin{minipage}{.3\textwidth}
-            					\includegraphics[width=\linewidth, height=.25\linewidth]{x1.png}
-            				\end{minipage}
-            			     & \begin{minipage}{.3\textwidth}
-            			         \includegraphics[width=\linewidth, 
-            			        height=.25\linewidth]{x1.png}
-            		       \end{minipage}                \\ \hline
-            				2   & y               & \begin{minipage}{.3\textwidth}
-            					\includegraphics[width=\linewidth, height=.25\linewidth]{y1.png}
-            				\end{minipage}                  &  \begin{minipage}{.3\textwidth}
-            				\includegraphics[width=\linewidth, height=.25\linewidth]{y1.png}
-            			\end{minipage}               \\ \hline
-            				3   & w               & \begin{minipage}{.3\textwidth}
-            					\includegraphics[width=\linewidth, height=.25\linewidth]{w1.png}
-            				\end{minipage}                  &  \begin{minipage}{.3\textwidth}
-            				\includegraphics[width=\linewidth, height=.25\linewidth]{w1.png}
-            			\end{minipage}               \\ \hline
-            				4   & y               &  \begin{minipage}{.3\textwidth}
-            					\includegraphics[width=\linewidth, height=.25\linewidth]{y2.png}
-            				\end{minipage}                 & \begin{minipage}{.3\textwidth}
-            				\includegraphics[width=\linewidth, height=.25\linewidth]{y2.png}
-            			\end{minipage}                \\ \hline
-            				5   & y               &  $x+y$                 &  $x+y$               \\ \hline
-            			\end{tabular}
-            		\end{table}
             	}
             \item {
-            Encuentra la representación en la sintaxis abstracta de orden superior de $e$. Está permitido usar sintaxis concreta para operaciones y números.
+                       	
+            Encuentra la representación en la sintaxis abstracta de orden superior de $e$. Está permitido usar sintaxis concreta para operaciones y números.\\
             
         	$let \ (let\ num[3],\ y.suma(num[2], y)),\ x.let(let (num[2],\ y.prod(y, num[5]),\ w.suma(let(div(w,x),\ y.suma(y,x), num[2]))$\\
         	
