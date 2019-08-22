@@ -76,9 +76,41 @@
             \end{enumerate}
         }
     	\item {
-    	Realiza la siguiente sustitución mostrando la respuesta paso a paso:\\
+    	Realiza la siguiente sustitución mostrando la respuesta paso a paso:
     	
-    	(let  $x = y \ast 4 \ in$ (let $z = x + 3$  in  $y \ast 2$ end) $\ast y $ end) $[y := x + 2]$
+        (let  $x = y \ast 4 \ in$ (let $z = x + 3$  in  $y \ast 2$ end) $\ast y $ end) $[y := x + 2]$
+        
+        \begin{align*}
+            &(\texttt{let} \ x = y \ast 4 \ \texttt{in} \ 
+            (\texttt{let} \ z = x + 3 \ \texttt{in} \ 
+            y \ast 2 \ \texttt{end}) \ \ast y \ \texttt{end}) 
+            [y := x + 2] \\
+            \equiv_{\alpha}
+            & (\texttt{let} \ w = y \ast 4 \ \texttt{in} \ 
+            (\texttt{let} \ z = w + 3 \ \texttt{in} \ 
+            y \ast 2 \ \texttt{end}) \ \ast y \ \texttt{end}) 
+            [y := x + 2] \\
+            =
+            & \texttt{let} \ w = (y \ast 4)[y := x + 2] \ \texttt{in} \ 
+            ((\texttt{let} \ z = w + 3 \ \texttt{in} \ 
+            y \ast 2 \ \texttt{end}) \ \ast y) [y := x + 2] \ \texttt{end}
+            \\
+            =
+            & \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
+            (\texttt{let} \ z = w + 3 \ \texttt{in} \ 
+            y \ast 2 \ \texttt{end})[y := x + 2] \ \ast y [y := x + 2] \ 
+            \texttt{end} \\
+            =
+            & \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
+            (\texttt{let} \ z = (w + 3) [y := x + 2] \ \texttt{in} \ 
+            (y \ast 2 ) [y := x + 2]\ \texttt{end}) \ \ast (x + 2) \ 
+            \texttt{end} \\
+            =
+            & \texttt{let} \ w = (x + 2) \ast 4 \ \texttt{in} \ 
+            (\texttt{let} \ z = (w + 3) \ \texttt{in} \ 
+            ((x + 2) \ast 2 ) \ \texttt{end}) \ \ast (x + 2) \ 
+            \texttt{end} \\
+        \end{align*}
     	
     	}
     \end{enumerate}
